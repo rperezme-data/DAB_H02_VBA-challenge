@@ -8,8 +8,8 @@ Sub VBA_Challenge()
     Dim new_stock As Boolean
     Dim report_row As Double
     
-    Dim stock_volume As Double
     Dim open_year_price As Double
+    Dim stock_volume As Double
     Dim close_year_price As Double
     
     'FLAGS
@@ -60,7 +60,7 @@ Sub VBA_Challenge()
             'Set new_stock flag as False
             new_stock = False
         
-        'Acumulate volume of current stock
+        'Accumulate volume of current stock
         Else
             stock_volume = stock_volume + Cells(i, 7).Value
         
@@ -73,7 +73,7 @@ Sub VBA_Challenge()
                 'Report yearly price change of current stock in table
                 Cells(report_row, 10).Value = close_year_price - open_year_price
                 
-                'Format yearly place change
+                'Format yearly price change
                 If Cells(report_row, 10).Value > 0 Then
                     Cells(report_row, 10).Interior.ColorIndex = 4
                 ElseIf Cells(report_row, 10).Value < 0 Then
@@ -81,9 +81,14 @@ Sub VBA_Challenge()
                 End If
                 
                 'Report & Format yearly percent change of price of current stock in table
-                Cells(report_row, 11).Value = (close_year_price - open_year_price) / open_year_price
-                Cells(report_row, 11).NumberFormat = "0.00%"
-                                
+                If open_year_price = 0 Then
+                    Cells(report_row, 11).Value = "DIV/0 Error"
+                    Cells(report_row, 11).HorizontalAlignment = xlRight
+                Else
+                    Cells(report_row, 11).Value = (close_year_price - open_year_price) / open_year_price
+                    Cells(report_row, 11).NumberFormat = "0.00%"
+                End If
+                
                 'Report accumulated volume of current stock in table
                 Cells(report_row, 12).Value = stock_volume
                 
