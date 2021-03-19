@@ -13,7 +13,7 @@ Sub VBA_Challenge()
     Dim last_row As Double
     Dim skip_header As Integer
     Dim report_row As Double
-    
+            
     Dim open_year_price As Double
     Dim stock_volume As Double
     Dim close_year_price As Double
@@ -35,9 +35,11 @@ Sub VBA_Challenge()
         ws.Cells(1, 10).Value = "Yearly Change"
         ws.Cells(1, 11).Value = "Percent Change"
         ws.Cells(1, 12).Value = "Total Stock Volume"
+        'Set column width (autofit)
+        ws.Columns("L").AutoFit
         'Set first report row
         report_row = 2
-        
+                                
         'FIND LAST ROW
         'Get row number of last row in column A with data
         last_row = ws.Cells(Rows.Count, 1).End(xlUp).Row
@@ -109,6 +111,18 @@ Sub VBA_Challenge()
             End If
     
         Next i
+    
+    
+        'BONUS REPORT
+        'Write headers of bonus report (start @ws.Cells(1, 15)
+        ws.Cells(1, 16).Value = "Ticker"
+        ws.Cells(1, 17).Value = "Value"
+        ws.Cells(2, 15).Value = "Greatest % Increase"
+        ws.Cells(3, 15).Value = "Greatest % Decrease"
+        ws.Cells(4, 15).Value = "Greatest Total Volume"
+        'Set column width (autofit)
+        ws.Columns("O").AutoFit
+    
     
     Next ws
 
