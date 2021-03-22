@@ -8,12 +8,13 @@ Sub VBA_Challenge()
     start_time = Hour(Now) * 3600 + Minute(Now) * 60 + Second(Now)
 
     'VARIABLES
-    'Declare variables type
+    'Declare variables and set type
     Dim ws As Worksheet
     Dim last_row As Double
     Dim skip_header As Integer
     Dim report_row As Double
-            
+    
+    Dim ticker As String
     Dim open_year_price As Double
     Dim close_year_price As Double
     Dim stock_volume As Double
@@ -25,18 +26,14 @@ Sub VBA_Challenge()
     Dim max_pct_decrease As Double
     Dim max_volume As Double
     
-    
     'FLAGS
-    'Skip Header flag:
-        '0 = No header lines to skip
-        '1...n = Number of header lines to skip
+    'Skip header flag (0 = False, 1...n = Number of lines to skip)
     skip_header = 1
      
     'WORKSHEET LOOP
     'Loop worksheets to analyse stock information
     For Each ws In Worksheets
-    'MsgBox (ws.Name)
-  
+      
         'REPORT TABLE
         'Write headers of report table (start @ws.Cells(1, 9)
         ws.Cells(1, 9).Value = "Ticker"
@@ -47,8 +44,6 @@ Sub VBA_Challenge()
         ws.Columns("L").AutoFit
         'Set first report row
         report_row = 2
-                                                   
-                                                  
         
         'BONUS REPORT TABLE
         'Write headers of bonus report table (start @ws.Cells(1, 15)
@@ -67,13 +62,10 @@ Sub VBA_Challenge()
         max_pct_increase = 0
         max_pct_decrease = 0
         max_volume = 0
-                     
-                                                      
-                               
+        
         'FIND LAST ROW
         'Get row number of last row in column A with data
         last_row = ws.Cells(Rows.Count, 1).End(xlUp).Row
-        'MsgBox (last_row)
         
         'STOCK ANALYSIS
         'Get open price for first stock
@@ -96,6 +88,7 @@ Sub VBA_Challenge()
                 stock_volume = stock_volume + ws.Cells(i, 7).Value
     
                 'COMPUTE & REPORT RESULTS
+                
                 'Report ticker in table
                 ws.Cells(report_row, 9).Value = ticker
                 
@@ -125,30 +118,38 @@ Sub VBA_Challenge()
                 
                 'Set report row for next stock
                 report_row = report_row + 1
-                
-                
+                                
                 'COMPUTE & REPORT BONUS
                 
+                'Compare Max percent increase with current stock percent change value
                 If year_pct_change > max_pct_increase Then
+                    'Update Max percent increase if new maximum is detected
                     max_pct_increase = year_pct_change
+                    'Report updated Max percent increase
                     ws.Cells(2, 16).Value = ticker
                     ws.Cells(2, 17).Value = max_pct_increase
                 End If
                 
+                'Compare Max percent decrease with current stock percent change value
                 If year_pct_change < max_pct_decrease Then
+                    'Update Max percent decrease if new maximum is detected
                     max_pct_decrease = year_pct_change
+                    'Report updated Max percent decrease
                     ws.Cells(3, 16).Value = ticker
                     ws.Cells(3, 17).Value = max_pct_decrease
                 End If
                 
+                'Compare Max trading volume with current stock trading volume
                 If stock_volume > max_volume Then
+                    'Update Max trading volume if new maximum is detected
                     max_volume = stock_volume
+                    'Report updated Max trading volume
                     ws.Cells(4, 16).Value = ticker
                     ws.Cells(4, 17).Value = max_volume
                 End If
-                
-                
+                                
                 'SET VALUES FOR NEXT STOCK
+                
                 'Get open price for next stock
                 open_year_price = ws.Cells(i + 1, 3).Value
                 
