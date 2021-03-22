@@ -34,3 +34,6 @@ An additional report will display the Ticker and Value for:
 - The greatest percent increase
 - The greatest percent decrease
 - The greatest trading volume
+
+### Note:
+*The script is timed, and the execution time (in seconds) is displayed to the user in a Message Box.*
