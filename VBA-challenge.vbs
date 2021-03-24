@@ -1,10 +1,10 @@
 Sub VBA_Challenge()
 
-
     'TIMEIT
     'Time script execution
     Dim start_time As Double
     Dim end_time As Double
+    'Start timer
     start_time = Hour(Now) * 3600 + Minute(Now) * 60 + Second(Now)
 
     'VARIABLES
@@ -158,7 +158,7 @@ Sub VBA_Challenge()
             
             Else
             
-            'If next row belongs to the current stock
+            'If next row belongs to current stock, only accumulate volume of current stock
             stock_volume = stock_volume + ws.Cells(i, 7).Value
                     
             End If
@@ -167,7 +167,9 @@ Sub VBA_Challenge()
        
     Next ws
 
+    'End timer
     end_time = Hour(Now) * 3600 + Minute(Now) * 60 + Second(Now)
+    'Display execution time (in seconds)
     MsgBox ("Execution time: " & end_time - start_time & " seconds")
 
 End Sub
