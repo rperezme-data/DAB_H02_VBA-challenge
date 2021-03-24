@@ -1,4 +1,4 @@
-Sub VBA_Challenge()
+Sub VBA_Challenge_Bonus()
 
     'TIMEIT
     'Time script execution
